@@ -12,7 +12,7 @@ pipeline{
      stage('Pull From Backend Repo') {
          steps {
             sshagent([credential]) {
-                sh """ssh -t StrictHostkeyChecking=no ${server} << EOF
+                sh """ssh -tt StrictHostkeyChecking=no ${server} << EOF
                 cd ${directory}
                 git remote add origin ${url} || git remote set-url origin ${url}
                 git pull ${url} ${branch}
@@ -24,7 +24,7 @@ pipeline{
       stage('building database'){
 	  steps{
 	      sshagent ([credential]){
-                  sh """ssh -t StrictHostkeyChecking=no ${server} << EOF
+                  sh """ssh -tt StrictHostkeyChecking=no ${server} << EOF
 		  docker compose up -d
                   exit
                   EOF"""
@@ -34,7 +34,7 @@ pipeline{
       stage('building docker images'){
           steps{
               sshagent ([credential]) {
-                  sh """ssh -t StrictHostkeyChecking=no ${server} << EOF
+                  sh """ssh -tt StrictHostkeyChecking=no ${server} << EOF
                   docker compose -f be.yaml up -d
                   exit
                   EOF"""
@@ -44,7 +44,7 @@ pipeline{
       stage('Push to Docker Hub') {
           steps {
               sshagent([credential]) {
-		  sh """ssh -t StrictHostkeyChecking=no ${server} << EOF
+		  sh """ssh -tt StrictHostkeyChecking=no ${server} << EOF
 		  docker tag ${image} ${userdock}/${image}:v1
 		  docker image push ${userdock}/${image}:v1
 		  exit
