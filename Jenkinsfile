@@ -1,6 +1,6 @@
 def credential = 'beckend'
 def userdock = 'menther'
-def server = 'grup3@116.193.190.138'
+def server = 'menther@20.0.82.144'
 def directory = 'housy-backend'
 def url = 'https://github.com/menther/housy-backend.git'
 def branch = 'main'
