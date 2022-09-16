@@ -1,4 +1,4 @@
-def credential = 'beckend'
+def credential = 'menther'
 def userdock = 'menther'
 def server = 'menther@20.0.82.144'
 def directory = 'housy-backend'
