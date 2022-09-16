@@ -45,8 +45,8 @@ pipeline{
           steps {
               sshagent([credential]) {
 		  sh """ssh -o StrictHostkeyChecking=no ${server} << EOF
-		  docker tag ${userdock}-${image}:latest
-		  docker image push ${userdock}-${image}:latest
+		  docker tag ${userdock}-${image}:latest ${userdock}/${image}:latest
+		  docker image push ${userdock}/${image}:latest
 		  exit
 		  EOF"""
 	      }
