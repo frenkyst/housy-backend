@@ -25,7 +25,7 @@ pipeline{
 	  steps{
 	      sshagent ([credential]){
                   sh """ssh -o StrictHostkeyChecking=no ${server} << EOF
-		  docker compose db.yaml up -d
+		  docker compose -f db.yaml up -d
                   exit
                   EOF"""
 	      }
