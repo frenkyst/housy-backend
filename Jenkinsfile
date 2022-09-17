@@ -21,21 +21,25 @@ pipeline{
               }
           }
       }
-      stage('building database'){
+      stage('Building Database First Time'){
 	  steps{
 	      sshagent ([credential]){
                   sh """ssh -o StrictHostkeyChecking=no ${server} << EOF
-		  docker compose up -d
+		  docker compose db.yaml up -d
                   exit
                   EOF"""
 	      }
 	  }
       } 
-      stage('building docker images'){
+      stage('Building Docker Images'){
           steps{
               sshagent ([credential]) {
                   sh """ssh -o StrictHostkeyChecking=no ${server} << EOF
-                  docker compose -f be.yaml up -d
+		  cd ${directory}
+		  docker compose down
+                  docker rmi ${userdock}/${image}
+                  docker rmi ${image}
+                  docker compose up -d
                   exit
                   EOF"""
               }
